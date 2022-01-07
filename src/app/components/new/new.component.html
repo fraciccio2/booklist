@@ -1,0 +1,102 @@
+<h1>Save your book</h1>
+<mat-grid-list [cols]="cols" rowHeight="45rem">
+    <mat-grid-tile>
+        <form #f="ngForm">
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Title</mat-label>
+                    <input matInput #title="ngModel" [(ngModel)]="book.title" name="title" required>
+                    <mat-icon matPrefix>book</mat-icon>
+                    <mat-error *ngIf="title.invalid && title.touched">Title is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Author</mat-label>
+                    <input matInput #author="ngModel" [(ngModel)]="book.author" name="author" required>
+                    <mat-icon matPrefix>account_box</mat-icon>
+                    <mat-error *ngIf="author.invalid && author.touched">Author is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Publishing House</mat-label>
+                    <input matInput #publ="ngModel" [(ngModel)]="book.publ" name="publ">
+                    <mat-icon matPrefix>store</mat-icon>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Genre</mat-label>
+                    <mat-select [(ngModel)]="book.category" name="category">
+                        <mat-option *ngFor="let cat of categories" [value]="cat">
+                            {{cat}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-icon matPrefix>star</mat-icon>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Year of Publication</mat-label>
+                    <input matInput #year="ngModel" [(ngModel)]="book.year" name="year" type="date" pattern="\d{4}-\d{2}-\d{2}">
+                    <mat-icon matPrefix>update</mat-icon>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Choose File</mat-label>
+                    <input type="file" hidden (change)="fileSelected($event)" #fileInput accept=".png, .jpeg, .jpg">
+                    <input matInput type="text" [value]="nameP" (click)="fileInput.click()">
+                    <button type="button" mat-icon-button matSuffix (click)="fileInput.click()">
+                        <mat-icon matPrefix>attach_file</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Leave a review</mat-label>
+                    <textarea matInput placeholder="Ex. It makes me feel..." #rev="ngModel" [(ngModel)]="book.rev"
+                        name="rev"></textarea>
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-raised-button type="submit" color="primary" [disabled]="!f.valid" (click)="save()">Save</button>
+                <button mat-raised-button type="button" color="warn" class="del" *ngIf="id"
+                    (click)=delete()>Delete</button>
+            </div>
+        </form>
+    </mat-grid-tile>
+    <mat-grid-tile *ngIf="!isMobile">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>Book Recap</mat-card-title>
+            </mat-card-header>
+            <img [src]="photo || book.imageUrl" *ngIf="photo || book.imageUrl" class="image">
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>book</mat-icon>
+                        <div mat-line>{{book.title}}</div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>account_box</mat-icon>
+                        <div mat-line>{{book.author}}</div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>store</mat-icon>
+                        <div mat-line>{{book.publ}}</div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>star</mat-icon>
+                        <div mat-line>{{book.category}}</div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>update</mat-icon>
+                        <div mat-line>{{book.year}}</div>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>

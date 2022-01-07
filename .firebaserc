@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "booklist-74316": {
+      "hosting": {
+        "booklist": [
+          "booklist-74316"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "booklist-74316"
+  }
+}

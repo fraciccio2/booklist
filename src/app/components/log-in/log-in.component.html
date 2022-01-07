@@ -1,0 +1,71 @@
+<h1>Chose the metod to enter:</h1>
+<mat-list role="list">
+    <mat-list-item role="listitem">
+        <button mat-raised-button color="warn" class="log" (click)="login()">LogIn o SignUp with Google</button>
+    </mat-list-item>
+    <mat-list-item role="listitem">
+        <button mat-raised-button color="warn" class="log" (click)="logem()">LogIn with Email</button>
+    </mat-list-item>
+    <mat-list-item>
+        <button mat-raised-button color="warn" class="log" (click)="emn=true && em=true">SigUp with Email</button>
+    </mat-list-item>
+</mat-list>
+<mat-stepper orientation="vertical" *ngIf="em">
+    <h2>Enter with email and password:</h2>
+    <mat-step>
+        <form class="example-container" #f="ngForm">
+            <ng-template matStepLabel>Insert email</ng-template>
+            <mat-form-field appearance="outline">
+                <mat-label>Enter your email</mat-label>
+                <input matInput placeholder="pat@example.com" #email="ngModel" [(ngModel)]="contact.email" name="email"
+                    required email>
+                <mat-error *ngIf="email.errors?.email">Not valid Email</mat-error>
+                <mat-error *ngIf="email.touched && email.invalid">Email is required</mat-error>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext [disabled]="!f.valid">Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <form class="example-container" #f2="ngForm">
+            <ng-template matStepLabel>Insert password</ng-template>
+            <mat-form-field appearance="outline">
+                <mat-label>Enter your password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" #password="ngModel" [(ngModel)]="contact.password"
+                    name="password" minlength="6" required>
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="password.touched && password.invalid">Password is required</mat-error>
+                <mat-error *ngIf="password.errors?.minlength">The password must have at least 6 characters</mat-error>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext [disabled]="!f2.valid">Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step *ngIf="emn">
+        <form class="example-container" #f3="ngForm">
+            <ng-template matStepLabel>Insert name</ng-template>
+            <mat-form-field appearance="outline">
+                <mat-label>Enter your name</mat-label>
+                <input matInput placeholder="Your name" #name="ngModel" [(ngModel)]="contact.name" name="name" required>
+                <mat-error *ngIf="name.touched && password.invalid">Name is required</mat-error>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext [disabled]="!f3.valid">Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <div>
+            <button mat-raised-button (click)="loginEP()" color="warn" class="log2" *ngIf="em && !emn">Log In</button>
+            <button mat-raised-button (click)="signEP()" color="warn" class="log2" *ngIf="em && emn">Sign Up</button>
+        </div>
+    </mat-step>
+</mat-stepper>

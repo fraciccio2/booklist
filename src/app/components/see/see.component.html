@@ -1,0 +1,43 @@
+<mat-card class="example-card" style="background-color: #eceef8;">
+    <mat-card-header>
+        <mat-card-title>Your Book</mat-card-title>
+    </mat-card-header>
+    <img [src]="book.imageUrl" class="image" *ngIf="book.imageUrl">
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item>
+                <mat-icon mat-list-icon matTooltip="Title" matTooltipClass="example-tooltip-red">book</mat-icon>
+                <div mat-line>{{book.title}}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon mat-list-icon matTooltip="Author" matTooltipClass="example-tooltip-red">account_box</mat-icon>
+                <div mat-line>{{book.author}}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon mat-list-icon matTooltip="Genre" matTooltipClass="example-tooltip-red">star</mat-icon>
+                <div mat-line>{{book.category}}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon mat-list-icon matTooltip="Publishing House" matTooltipClass="example-tooltip-red">store</mat-icon>
+                <div mat-line>{{book.publ}}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon mat-list-icon  matTooltip="Year of Publication" matTooltipClass="example-tooltip-red">update</mat-icon>
+                <div mat-line>{{book.year}}</div>
+            </mat-list-item>
+        </mat-list>
+        <h2>Review:</h2>
+        <div>
+            <p *ngIf="book.rev" class="pc">
+                {{book.rev}}
+            </p>
+        </div>
+        <p *ngIf="!book.rev">
+            There isn't a reviw for this book
+        </p>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions>
+            <button mat-raised-button color="warn" [routerLink]="['/new/', id]" style="width: 100%;">Edit</button>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>

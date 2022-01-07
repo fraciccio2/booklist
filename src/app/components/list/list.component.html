@@ -1,0 +1,62 @@
+<mat-grid-list cols="100" rowHeight="6rem">
+    <mat-grid-tile [colspan]="ms">
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+                <mat-icon>book</mat-icon>
+                <span (click)="search='title'">Search for title</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>account_box</mat-icon>
+                <span (click)="search='author'">Search for author</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>store</mat-icon>
+                <span (click)="search='publishing house'">Search for publishing house</span>
+            </button>
+        </mat-menu>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="ss">
+        <mat-form-field appearance="outline">
+            <mat-label class="in">Search for {{search}}</mat-label>
+            <input matInput (keyup)="applyFilter(input.value)" #input type="text" placeholder="Search..." class="in">
+            <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+    </mat-grid-tile>
+</mat-grid-list>
+<table mat-table class="mat-elevation-z8" [dataSource]="filterBook">
+    <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef> No.</th>
+        <td mat-cell *matCellDef="let filter">{{number(filter)}}</td>
+    </ng-container>
+    <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title</th>
+        <td mat-cell *matCellDef="let filter">{{filter.payload.val().title}}</td>
+    </ng-container>
+    <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef>Author</th>
+        <td mat-cell *matCellDef="let filter"> {{filter.payload.val().author}} </td>
+    </ng-container>
+    <ng-container matColumnDef="publ">
+        <th mat-header-cell *matHeaderCellDef> Publishing House</th>
+        <td mat-cell *matCellDef="let filter"> {{filter.payload.val().publ}} </td>
+    </ng-container>
+    <ng-container matColumnDef="open">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let filter">
+            <a mat-button [routerLink]="['/see/', filter.payload.key]">Open</a>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+</table>
+<mat-paginator [length]="books$.length" 
+    [pageSize]="10" 
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="paginatorE($event)">
+</mat-paginator>
